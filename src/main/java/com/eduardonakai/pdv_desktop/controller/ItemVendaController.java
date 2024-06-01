@@ -82,4 +82,9 @@ public class ItemVendaController {
             return ResponseEntity.notFound().build();
         }
     }
+    @GetMapping("/venda/{id}")
+public ResponseEntity<List<ItemVenda>> getAllItensVendaByVendaId(@PathVariable Integer id) {
+    List<ItemVenda> itensVenda = itemVendaService.findAllByVendaId(id);
+    return ResponseEntity.ok(itensVenda);
+}
 }

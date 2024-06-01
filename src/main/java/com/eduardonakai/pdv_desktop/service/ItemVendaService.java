@@ -44,4 +44,7 @@ public class ItemVendaService {
     public void deleteById(Integer id) {
         itemVendaRepository.deleteById(id);
     }
+    public List<ItemVenda> findAllByVendaId(Integer vendaId) {
+        return itemVendaRepository.findAllByVendaId(vendaId);
+    }
 }

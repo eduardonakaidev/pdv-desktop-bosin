@@ -56,7 +56,7 @@ public class ClienteController {
         Optional<Cliente> cliente = clienteService.findById(id);
         if (cliente.isPresent()) {
             clienteService.deleteById(id);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.status(204).build();
         } else {
             return ResponseEntity.notFound().build();
         }

@@ -55,7 +55,7 @@ public class ProdutoController {
         Optional<Produto> produto = produtoService.findById(id);
         if (produto.isPresent()) {
             produtoService.deleteById(id);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.status(204).build();
         } else {
             return ResponseEntity.notFound().build();
         }
