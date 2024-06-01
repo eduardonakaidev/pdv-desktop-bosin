@@ -1,15 +1,17 @@
 package com.eduardonakai.pdv_desktop.model;
 
-import org.hibernate.validator.constraints.Length;
-import java.util.UUID;
+
+
+import java.util.List;
+
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,22 +24,19 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity(name = "produto")
 @Table(name = "produto")
-public class ProdutoModel {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+public class Produto {
+     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-    @NotNull
-    @NotEmpty
     @NotBlank
-    @Length(max = 200)
     private String descricao;
 
     @NotNull
-    private int valorincents;
+    private Double valor;
 
-    @NotBlank
-    @NotNull
-    @NotEmpty
     private String categoria;
+
+    @OneToMany(mappedBy = "produto")
+    private List<ItemVenda> itensVenda;
 }
