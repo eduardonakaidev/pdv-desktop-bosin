@@ -38,6 +38,7 @@ public class VendaController {
 
     @Autowired
     private ProdutoService produtoService;
+    @SuppressWarnings("unused")
     @Autowired
     private ItemVendaService itemVendaService;
 
