@@ -1,12 +1,15 @@
-package com.eduardonakai.util;
+package com.eduardonakai.pdv_desktop.util;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Component;
 
 import com.eduardonakai.pdv_desktop.dto.ItemVendaDTO;
 import com.eduardonakai.pdv_desktop.dto.VendaDTO;
 import com.eduardonakai.pdv_desktop.model.Venda;
 
+@Component
 public class VendaConverter {
     
     public static VendaDTO toDTO(Venda venda) {

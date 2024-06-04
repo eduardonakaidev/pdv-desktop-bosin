@@ -21,35 +21,32 @@ Ao confirmar a venda na tela de venda, a operação de salvar a venda deve ser r
 
 ## requisitos funcionais
 
-- [ ]  deve ser possível realizar uma venda;
-- [ ]  deve ser possível listar os clientes;
-- [ ]  deve ser possível listar os produtos;
-- [ ]  deve ser possível listar os itemvenda de uma venda;
-- [ ]  deve ser possível buscar o produto por id;
-- [ ]  deve ser possível criar um produto;
-- [ ]  deve ser possivel buscar o cliente por id;
-- [ ]  deve ser possível criar um cliente;
-- [ ]  deve ser possível listar os itemvenda;
-- [ ]  deve ser possível criar um itemvenda;
-- [ ]  deve ser possível atualizar o itemvenda;
-- [ ]  deve ser possível deletar o itemvenda;
-- [ ]  deve ser possível criar um venda;
-- [ ]  deve ser possível atualizar a venda;
-- [ ]  deve ser possível recuperar a venda que esta incompleta do usuario;
+- [x]  deve ser possível realizar uma venda;
+- [x]  deve ser possível listar os clientes;
+- [x]  deve ser possível listar os produtos;
+- [x]  deve ser possível listar os itemvenda de uma venda;
+- [x]  deve ser possível buscar o produto por id;
+- [x]  deve ser possível criar um produto;
+- [x]  deve ser possivel buscar o cliente por id;
+- [x]  deve ser possível criar um cliente;
+- [x]  deve ser possível listar os itemvenda;
+- [x]  deve ser possível criar um itemvenda;
+- [x]  deve ser possível atualizar o itemvenda;
+- [x]  deve ser possível deletar o itemvenda;
+- [x]  deve ser possível criar um venda;
+- [x]  deve ser possível atualizar a venda;
 - [ ]  deve ser possivel fazer login;
 - [ ]  deve ser possivel se registrar;
 
 ## regras de negocio
-- [ ] não deve ser possível começar uma nova venda se a venda esta incompleta;
-- [ ] cada venda so deve ter um cliente;
-- [ ] a venda não deve ser confirmada se não tiver nem um item;
-- [ ] a venda não deve ser confirmada sem um cliente definido;
-- [ ] as informações de valortotal deve ser definido no sistema;
-- [ ] o itemvenda extende as informações do produto;
+- [x] cada venda so deve ter um cliente;
+- [x] a venda não deve ser confirmada sem um cliente definido;
+- [x] as informações de valortotal deve ser definido no sistema;
+- [x] o itemvenda extende as informações do produto;
 - [ ] as rotas deve ser acessadas so quando logada menos o registrar e o login do usuario;
 
 ## requisitos não funcionais 
-- [ ] a aplicação deve ser feita em spring boot;
+- [x] a aplicação deve ser feita em spring boot;
 - [ ] deve ter autenticação com o spring security;
-- [ ] deve ser matido os dados em um banco de dados postgresql;
-- [ ] quem vai consumir a aplicação é uma aplicação java swing desktop;
+- [x] deve ser matido os dados em um banco de dados postgresql;
+- [x] quem vai consumir a aplicação é uma aplicação java swing desktop;

@@ -56,7 +56,7 @@ public class ItemVendaController {
     public ResponseEntity<ItemVenda> updateItemVenda(@PathVariable Integer id, @Valid @RequestBody ItemVendaDTO itemVendaDTO) {
         Optional<ItemVenda> itemVendaOpt = itemVendaService.findById(id);
         if (itemVendaOpt.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            throw new ResourceNotFoundException("Item de venda não encontrado");
         }
 
         ItemVenda itemVenda = itemVendaOpt.get();
@@ -75,16 +75,17 @@ public class ItemVendaController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteItemVenda(@PathVariable Integer id) {
         Optional<ItemVenda> itemVenda = itemVendaService.findById(id);
-        if (itemVenda.isPresent()) {
-            itemVendaService.deleteById(id);
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.notFound().build();
+        if (itemVenda.isEmpty()) {
+            throw new ResourceNotFoundException("Item de venda não encontrado");
         }
+
+        itemVendaService.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
+
     @GetMapping("/venda/{id}")
-public ResponseEntity<List<ItemVenda>> getAllItensVendaByVendaId(@PathVariable Integer id) {
-    List<ItemVenda> itensVenda = itemVendaService.findAllByVendaId(id);
-    return ResponseEntity.ok(itensVenda);
-}
+    public ResponseEntity<List<ItemVenda>> getAllItensVendaByVendaId(@PathVariable Integer id) {
+        List<ItemVenda> itensVenda = itemVendaService.findAllByVendaId(id);
+        return ResponseEntity.ok(itensVenda);
+    }
 }

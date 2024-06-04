@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.eduardonakai.pdv_desktop.dto.ClienteDTO;
+import com.eduardonakai.pdv_desktop.error.ResourceNotFoundException;
 import com.eduardonakai.pdv_desktop.model.Cliente;
 import com.eduardonakai.pdv_desktop.service.ClienteService;
 
@@ -40,25 +41,25 @@ public class ClienteController {
     @PutMapping("/{id}")
     public ResponseEntity<Cliente> updateCliente(@PathVariable Integer id, @Valid @RequestBody ClienteDTO clienteDTO) {
         Optional<Cliente> cliente = clienteService.findById(id);
-        if (cliente.isPresent()) {
-            Cliente updatedCliente = cliente.get();
-            updatedCliente.setNome(clienteDTO.nome());
-            updatedCliente.setTelefone(clienteDTO.telefone());
-            updatedCliente.setEmail(clienteDTO.email());
-            return ResponseEntity.ok(clienteService.save(updatedCliente));
-        } else {
-            return ResponseEntity.notFound().build();
+        if (cliente.isEmpty()) {
+            throw new ResourceNotFoundException("Cliente não encontrado");
         }
+
+        Cliente updatedCliente = cliente.get();
+        updatedCliente.setNome(clienteDTO.nome());
+        updatedCliente.setTelefone(clienteDTO.telefone());
+        updatedCliente.setEmail(clienteDTO.email());
+        return ResponseEntity.ok(clienteService.save(updatedCliente));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCliente(@PathVariable Integer id) {
         Optional<Cliente> cliente = clienteService.findById(id);
-        if (cliente.isPresent()) {
-            clienteService.deleteById(id);
-            return ResponseEntity.status(204).build();
-        } else {
-            return ResponseEntity.notFound().build();
+        if (cliente.isEmpty()) {
+            throw new ResourceNotFoundException("Cliente não encontrado");
         }
+
+        clienteService.deleteById(id);
+        return ResponseEntity.noContent().build(); 
     }
 }

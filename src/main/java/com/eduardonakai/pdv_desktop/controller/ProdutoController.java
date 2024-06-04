@@ -1,9 +1,11 @@
 package com.eduardonakai.pdv_desktop.controller;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.eduardonakai.pdv_desktop.dto.ProdutoDTO;
+import com.eduardonakai.pdv_desktop.error.ResourceNotFoundException;
 import com.eduardonakai.pdv_desktop.model.Produto;
 import com.eduardonakai.pdv_desktop.service.ProdutoService;
 
@@ -39,25 +41,25 @@ public class ProdutoController {
     @PutMapping("/{id}")
     public ResponseEntity<Produto> updateProduto(@PathVariable Integer id, @Valid @RequestBody ProdutoDTO produtoDTO) {
         Optional<Produto> produto = produtoService.findById(id);
-        if (produto.isPresent()) {
-            Produto updatedProduto = produto.get();
-            updatedProduto.setDescricao(produtoDTO.descricao());
-            updatedProduto.setValor(produtoDTO.valor());
-            updatedProduto.setCategoria(produtoDTO.categoria());
-            return ResponseEntity.ok(produtoService.save(updatedProduto));
-        } else {
-            return ResponseEntity.notFound().build();
+        if (produto.isEmpty()) {
+            throw new ResourceNotFoundException("Produto não encontrado");
         }
+
+        Produto updatedProduto = produto.get();
+        updatedProduto.setDescricao(produtoDTO.descricao());
+        updatedProduto.setValor(produtoDTO.valor());
+        updatedProduto.setCategoria(produtoDTO.categoria());
+        return ResponseEntity.ok(produtoService.save(updatedProduto));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduto(@PathVariable Integer id) {
         Optional<Produto> produto = produtoService.findById(id);
-        if (produto.isPresent()) {
-            produtoService.deleteById(id);
-            return ResponseEntity.status(204).build();
-        } else {
-            return ResponseEntity.notFound().build();
+        if (produto.isEmpty()) {
+            throw new ResourceNotFoundException("Produto não encontrado");
         }
+
+        produtoService.deleteById(id);
+        return ResponseEntity.noContent().build(); // Retorna 204 No Content
     }
 }
