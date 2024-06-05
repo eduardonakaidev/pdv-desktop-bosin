@@ -1,6 +1,7 @@
 package com.eduardonakai.pdv_desktop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +19,9 @@ import com.eduardonakai.pdv_desktop.service.ProdutoService;
 import com.eduardonakai.pdv_desktop.service.VendaService;
 import com.eduardonakai.pdv_desktop.util.VendaConverter;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 
 import java.util.List;
@@ -42,18 +46,34 @@ public class VendaController {
     private ItemVendaService itemVendaService;
 
     @GetMapping("/")
+     @Operation(summary = "listar todos os vendas",description = "operação responsavel pela listagem de vendas")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "listados com sucesso")
+    })
     public List<VendaDTO> getAllVendas() {
         List<Venda> vendas = vendaService.findAll();
         return vendas.stream().map(VendaConverter::toDTO).collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "buscar dos venda pelo id",description = "Responsavel pela busca dos venda pelo id")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "listados com sucesso"),
+        @ApiResponse(responseCode = "204",description = "cliente não encontrado")
+    })
     public ResponseEntity<Venda> getVendaById(@PathVariable Integer id) {
         Optional<Venda> venda = vendaService.findById(id);
         return venda.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping("/")
+    @Operation(summary = "Registro de vendas",description = "operação responsavel pela criação e registro das vendas")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", description = "criado com sucesso"),
+        @ApiResponse(responseCode = "400", description = "Campos obrigatórios em VendaDTO não podem ser nulos"),
+        @ApiResponse(responseCode = "404", description = "Cliente não encotrado"),
+        @ApiResponse(responseCode = "404", description = "produto não encontrado")
+    })
     public ResponseEntity<VendaDTO> createVenda(@Valid @RequestBody VendaDTOrequest vendaDTO) {
         // Verificar se os campos obrigatórios em VendaDTO estão preenchidos corretamente
         if (vendaDTO.observacoes() == null || vendaDTO.data() == null || vendaDTO.clienteId() == null) {
@@ -102,10 +122,17 @@ public class VendaController {
             v.getItensVenda().stream().map(ItemVendaDTO::fromItemVenda).collect(Collectors.toList())
         );
 
-        return ResponseEntity.ok(novaVendaDTO);
+          return ResponseEntity.status(HttpStatus.CREATED).body(novaVendaDTO);
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Atualizar a venda",description = "operação responsavel pela atualização das informações da venda")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "404", description = "produto não encontrado"),
+        @ApiResponse(responseCode = "404", description = "Venda não encontrado"),
+        @ApiResponse(responseCode = "200", description = "atualizado com sucesso"),
+        @ApiResponse(responseCode = "404", description = "Cliente não encotrado")
+    })
     public ResponseEntity<VendaDTO> updateVenda(@PathVariable Integer id, @Valid @RequestBody VendaDTO vendaDTO) {
         Optional<Venda> vendaOpt = vendaService.findById(id);
         if (vendaOpt.isEmpty()) {
@@ -151,6 +178,11 @@ public class VendaController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "deletar a venda",description = "operação responsavel pela deletar das informações de uma venda")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "404", description = "venda não encontrado"),
+        @ApiResponse(responseCode = "204", description = "deletado com sucesso"),
+    })
     public ResponseEntity<Void> deleteVenda(@PathVariable Integer id) {
         Optional<Venda> venda = vendaService.findById(id);
         if (venda.isEmpty()) {

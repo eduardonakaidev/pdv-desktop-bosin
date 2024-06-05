@@ -31,7 +31,6 @@ public class VendaService {
 
     @Transactional
     public Venda save(Venda venda) {
-        // Verifica se o cliente existe
         if (clienteRepository.existsById(venda.getCliente().getId())) {
             return vendaRepository.save(venda);
         } else {

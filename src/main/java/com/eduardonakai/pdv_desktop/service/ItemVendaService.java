@@ -22,6 +22,7 @@ public class ItemVendaService {
     @Autowired
     private ProdutoRepository produtoRepository;
 
+    
     public List<ItemVenda> findAll() {
         return itemVendaRepository.findAll();
     }
@@ -45,6 +46,7 @@ public class ItemVendaService {
         itemVendaRepository.deleteById(id);
     }
     public List<ItemVenda> findAllByVendaId(Integer vendaId) {
+        
         return itemVendaRepository.findAllByVendaId(vendaId);
     }
 }
