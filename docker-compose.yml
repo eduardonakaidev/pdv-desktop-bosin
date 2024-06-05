@@ -1,12 +1,9 @@
 version: '3.8'
 
 services:
-  postgres:
-    container_name: app
-    image: postgres
-    ports:
-      - 5432:5432
+  app:
+    image: seu_app_image
     environment:
-      - POSTGRES_USER=admin
-      - POSTGRES_PASSWORD=admin
-      - POSTGRES_DB=app
+      SPRING_DATASOURCE_URL: jdbc:postgres://admin:preawbAu3NAWZkgpwdKrGpK4VZwEgCP2@dpg-cpgefq8l6cac73b9fu40-a/pdv_desktop_db
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: preawbAu3NAWZkgpwdKrGpK4VZwEgCP2
