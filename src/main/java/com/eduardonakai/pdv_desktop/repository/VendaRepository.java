@@ -11,6 +11,7 @@ import com.eduardonakai.pdv_desktop.model.Venda;
 
 @Repository
 public interface VendaRepository  extends JpaRepository<Venda, Integer>{
+    @SuppressWarnings("null")
     @EntityGraph(attributePaths = "itensVenda")
     List<Venda> findAll();
 }

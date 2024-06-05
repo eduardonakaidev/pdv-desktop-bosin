@@ -26,7 +26,7 @@ public class ItemVendaController {
     @Autowired
     private ProdutoService produtoService;
 
-    @GetMapping
+    @GetMapping("/")
     public List<ItemVenda> getAllItensVenda() {
         return itemVendaService.findAll();
     }
@@ -37,7 +37,7 @@ public class ItemVendaController {
         return itemVenda.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping
+    @PostMapping("/")
     public ResponseEntity<ItemVenda> createItemVenda(@Valid @RequestBody ItemVendaDTO itemVendaDTO) {
         Optional<Produto> produtoOpt = produtoService.findById(itemVendaDTO.produtoId());
         if (produtoOpt.isEmpty()) {

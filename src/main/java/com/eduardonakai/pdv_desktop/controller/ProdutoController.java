@@ -21,7 +21,7 @@ public class ProdutoController {
     @Autowired
     private ProdutoService produtoService;
 
-    @GetMapping
+    @GetMapping("/")
     public List<Produto> getAllProdutos() {
         return produtoService.findAll();
     }
@@ -32,7 +32,7 @@ public class ProdutoController {
         return produto.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping
+    @PostMapping("/")
     public Produto createProduto(@Valid @RequestBody ProdutoDTO produtoDTO) {
         Produto produto = new Produto(null, produtoDTO.descricao(), produtoDTO.valor(), produtoDTO.categoria(), null);
         return produtoService.save(produto);

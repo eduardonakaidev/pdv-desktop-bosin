@@ -21,7 +21,7 @@ public class ClienteController {
     @Autowired
     private ClienteService clienteService;
 
-    @GetMapping
+    @GetMapping("/")
     public List<Cliente> getAllClientes() {
         return clienteService.findAll();
     }
@@ -32,7 +32,7 @@ public class ClienteController {
         return cliente.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping
+    @PostMapping("/")
     public Cliente createCliente(@Valid @RequestBody ClienteDTO clienteDTO) {
         Cliente cliente = new Cliente(null, clienteDTO.nome(), clienteDTO.telefone(), clienteDTO.email(), null);
         return clienteService.save(cliente);

@@ -41,7 +41,7 @@ public class VendaController {
     @Autowired
     private ItemVendaService itemVendaService;
 
-    @GetMapping
+    @GetMapping("/")
     public List<VendaDTO> getAllVendas() {
         List<Venda> vendas = vendaService.findAll();
         return vendas.stream().map(VendaConverter::toDTO).collect(Collectors.toList());
@@ -53,7 +53,7 @@ public class VendaController {
         return venda.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping
+    @PostMapping("/")
     public ResponseEntity<VendaDTO> createVenda(@Valid @RequestBody VendaDTOrequest vendaDTO) {
         // Verificar se os campos obrigatórios em VendaDTO estão preenchidos corretamente
         if (vendaDTO.observacoes() == null || vendaDTO.data() == null || vendaDTO.clienteId() == null) {
