@@ -1,6 +1,7 @@
 package com.eduardonakai.pdv_desktop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,9 +53,11 @@ public class ProdutoController {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "criado com sucesso")
     })
-    public Produto createProduto(@Valid @RequestBody ProdutoDTO produtoDTO) {
+    public ResponseEntity<Produto> createProduto(@Valid @RequestBody ProdutoDTO produtoDTO) {
         Produto produto = new Produto(null, produtoDTO.descricao(), produtoDTO.valor(), produtoDTO.categoria(), null);
-        return produtoService.save(produto);
+        Produto p =  produtoService.save(produto);
+        
+        return ResponseEntity.status(HttpStatus.CREATED).body(p);
     }
 
     @PutMapping("/{id}")
