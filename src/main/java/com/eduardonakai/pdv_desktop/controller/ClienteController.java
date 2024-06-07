@@ -18,6 +18,7 @@ import jakarta.validation.Valid;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @Tag(name = "Gerenciamento do cliente",description = "Operações relacionadas ao gerenciamento de clientes")
@@ -32,8 +33,9 @@ public class ClienteController {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "listados com sucesso")
     })
-    public List<Cliente> getAllClientes() {
-        return clienteService.findAll();
+   public List<ClienteDTO> getAllClientes() {
+        List<Cliente> clientes = clienteService.findAll();
+        return clientes.stream().map(this::conversordedto).collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
@@ -42,9 +44,10 @@ public class ClienteController {
         @ApiResponse(responseCode = "200", description = "listados com sucesso"),
         @ApiResponse(responseCode = "204",description = "cliente não encontrado")
     })
-    public ResponseEntity<Cliente> getClienteById(@PathVariable Integer id) {
+    public ResponseEntity<ClienteDTO> getClienteById(@PathVariable Integer id) {
         Optional<Cliente> cliente = clienteService.findById(id);
-        return cliente.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        return cliente.map(value -> ResponseEntity.ok(conversordedto(value)))
+                      .orElseGet(() -> ResponseEntity.status(HttpStatus.NO_CONTENT).build());
     }
 
     @PostMapping("/")
@@ -64,17 +67,18 @@ public class ClienteController {
         @ApiResponse(responseCode = "404", description = "cliente não encontrado"),
         @ApiResponse(responseCode = "200", description = "atualizado com sucesso"),
     })
-    public ResponseEntity<Cliente> updateCliente(@PathVariable Integer id, @Valid @RequestBody ClienteDTO clienteDTO) {
-        Optional<Cliente> cliente = clienteService.findById(id);
-        if (cliente.isEmpty()) {
+    public ResponseEntity<ClienteDTO> updateCliente(@PathVariable Integer id, @Valid @RequestBody ClienteDTO clienteDTO) {
+        Optional<Cliente> clienteOptional = clienteService.findById(id);
+        if (clienteOptional.isEmpty()) {
             throw new ResourceNotFoundException("Cliente não encontrado");
         }
 
-        Cliente updatedCliente = cliente.get();
+        Cliente updatedCliente = clienteOptional.get();
         updatedCliente.setNome(clienteDTO.nome());
         updatedCliente.setTelefone(clienteDTO.telefone());
         updatedCliente.setEmail(clienteDTO.email());
-        return ResponseEntity.ok(clienteService.save(updatedCliente));
+        Cliente savedCliente = clienteService.save(updatedCliente);
+        return ResponseEntity.ok(conversordedto(savedCliente));
     }
 
     @DeleteMapping("/{id}")
@@ -91,5 +95,8 @@ public class ClienteController {
 
         clienteService.deleteById(id);
         return ResponseEntity.noContent().build(); 
+    }
+    private ClienteDTO conversordedto(Cliente cliente) {
+        return new ClienteDTO(cliente.getNome(), cliente.getTelefone(), cliente.getEmail());
     }
 }
