@@ -2,7 +2,7 @@
 
 ### Eduardo Issao Nakai Frasson RA: 239648-1
 
-### Vitor Shimizu RA:
+### Vitor Shimizu RA:  240397-1
 
 ## Objetivo do projeto
 
