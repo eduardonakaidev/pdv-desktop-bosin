@@ -15,6 +15,8 @@ import lombok.Setter;
 
 import java.util.List;
 
+import com.eduardonakai.pdv_desktop.error.Numeric;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -29,9 +31,10 @@ public class Cliente {
 
     @NotBlank
     private String nome;
-
+    @NotBlank
+    @Numeric(message = "O telefone so pode ter numeros exemplo: 00000000000")
     private String telefone;
-
+    @NotBlank
     @Email
     private String email;
 

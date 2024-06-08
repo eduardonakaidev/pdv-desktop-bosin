@@ -34,7 +34,7 @@ public class Produto {
 
     @NotNull
     private Double valor;
-
+    @NotBlank
     private String categoria;
 
     @OneToMany(mappedBy = "produto")
