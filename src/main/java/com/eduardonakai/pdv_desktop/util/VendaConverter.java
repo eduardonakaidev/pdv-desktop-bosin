@@ -16,7 +16,6 @@ public class VendaConverter {
         List<ItemVendaDTO> itemVendaDTOList = venda.getItensVenda().stream().map(item ->
             new ItemVendaDTO(
                 item.getQuantidade(),
-                item.getValorUnitario(),
                 item.getProduto().getId()  // Only include the product ID
             )
         ).collect(Collectors.toList());

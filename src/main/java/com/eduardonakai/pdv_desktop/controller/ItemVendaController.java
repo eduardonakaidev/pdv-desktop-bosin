@@ -67,7 +67,7 @@ public class ItemVendaController {
 
         ItemVenda itemVenda = new ItemVenda();
         itemVenda.setQuantidade(itemVendaDTO.quantidade());
-        itemVenda.setValorUnitario(itemVendaDTO.valorUnitario());
+        itemVenda.setValorUnitario(produtoOpt.get().getValor());
         itemVenda.setProduto(produtoOpt.get());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(itemVendaService.save(itemVenda));
@@ -93,7 +93,7 @@ public class ItemVendaController {
         }
 
         itemVenda.setQuantidade(itemVendaDTO.quantidade());
-        itemVenda.setValorUnitario(itemVendaDTO.valorUnitario());
+        itemVenda.setValorUnitario(produtoOpt.get().getValor());
         itemVenda.setProduto(produtoOpt.get());
 
         return ResponseEntity.ok(itemVendaService.save(itemVenda));

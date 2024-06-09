@@ -107,7 +107,10 @@ public class VendaController {
         }).collect(Collectors.toList());
 
         // Calcular o total da venda como a soma do valor total de todos os itens de venda
-        double totalVenda = itensVenda.stream().mapToDouble(ItemVenda::getValorTotal).sum();
+        double totalVenda = itensVenda.stream()
+        .mapToDouble(item -> item.getValorUnitario() * item.getQuantidade()).sum();
+
+        System.out.println("Total da Venda: " + totalVenda);
 
         venda.setTotal(totalVenda);
         venda.setItensVenda(itensVenda);
@@ -158,7 +161,7 @@ public class VendaController {
 
             ItemVenda itemVenda = new ItemVenda();
             itemVenda.setQuantidade(dto.quantidade());
-            itemVenda.setValorUnitario(dto.valorUnitario());
+            itemVenda.setValorUnitario(produtoOpt.get().getValor());
             itemVenda.setProduto(produtoOpt.get());
             itemVenda.setVenda(venda);
             return itemVenda;
