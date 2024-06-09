@@ -35,18 +35,18 @@ Ao confirmar a venda na tela de venda, a operação de salvar a venda deve ser r
 - [x]  deve ser possível deletar o itemvenda;
 - [x]  deve ser possível criar um venda;
 - [x]  deve ser possível atualizar a venda;
-- [ ]  deve ser possivel fazer login;
-- [ ]  deve ser possivel se registrar;
+- [x]  deve ser possivel fazer login;
+- [x]  deve ser possivel se registrar;
 
 ## regras de negocio
 - [x] cada venda so deve ter um cliente;
 - [x] a venda não deve ser confirmada sem um cliente definido;
 - [x] as informações de valortotal deve ser definido no sistema;
 - [x] o itemvenda extende as informações do produto;
-- [ ] as rotas deve ser acessadas so quando logada menos o registrar e o login do usuario;
+- [x] as rotas deve ser acessadas so quando logada menos o registrar e o login do usuario;
 
 ## requisitos não funcionais 
 - [x] a aplicação deve ser feita em spring boot;
-- [ ] deve ter autenticação com o spring security;
+- [x] deve ter autenticação com o spring security;
 - [x] deve ser matido os dados em um banco de dados postgresql;
 - [x] quem vai consumir a aplicação é uma aplicação java swing desktop;
